@@ -1,0 +1,33 @@
+# coding:utf8
+from django.db import models
+from django.utils.translation import ugettext_lazy as _
+
+PRICE_DURATION_1DAY = '1'
+PRICE_DURATION_2DAY = '2'
+PRICE_DURATION_3DAY = '3'
+PRICE_DURATION_4DAY = '4'
+PRICE_DURATION_5DAY = '5'
+PRICE_DURATION_7DAY = '7'
+PRICE_DURATION_15DAY = '15'
+PRICE_DURATION_1MONTH = '30'
+PRICE_DURATION_1YEAR = '365'
+PRICE_DURATION_2MONTH = '60'
+PRICE_DURATION_3MONTH = '90'
+PRICE_DURATION_HALF_YEAR = '180'
+PRICE_DURATION_3YEARS = '1095'
+PRICE_DURATION_CHOICES = (
+    (PRICE_DURATION_1DAY, _('1 day')),
+    (PRICE_DURATION_2DAY, _('2 days')),
+    (PRICE_DURATION_3DAY, _('3 days')),
+    (PRICE_DURATION_4DAY, _('4 days')),
+    (PRICE_DURATION_5DAY, _('5 days')),
+    (PRICE_DURATION_7DAY, _('7 days')),
+    (PRICE_DURATION_15DAY, _('half a month')),
+    (PRICE_DURATION_1MONTH, _('1 month')),
+    (PRICE_DURATION_1YEAR, _('1 year')),
+    (PRICE_DURATION_2MONTH, _('2 months')),
+    (PRICE_DURATION_3MONTH, _('3 months')),
+    (PRICE_DURATION_HALF_YEAR, _('half a year')),
+    (PRICE_DURATION_3YEARS, _('3 years')),
+)
+

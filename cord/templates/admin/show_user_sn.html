@@ -1,0 +1,25 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+
+
+<form action="" method="post">{% csrf_token %}
+
+    <p>用户(name: <span style="color:red;">{{query_user}}</span>)登录过的机器SN:</p>
+
+    {% if sn_list %}
+    <ul>
+        {% for i in sn_list %}
+            <li><a href="/admin/trust/device/?q={{i}}" alt="点击跳转到相应的设备" target="_self">{{i}}</a></li>
+        {% endfor %}
+        <!--ul>{{ sn_list|unordered_list }}</ul-->
+    </ul>
+    {% else %}
+        <ul>无任何登录记录！</ul>
+    {% endif %}
+
+    <input type="hidden" name="action" value="send_EMAIL" />
+    <!--input type="submit" name="apply" value="Send Email" /-->
+</form>
+
+{% endblock %}

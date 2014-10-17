@@ -1,0 +1,25 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+
+
+<form action="" method="post">{% csrf_token %}
+
+    <p>用户(name: <span style="color:red;">{{query_user}}</span>)的付费信息:</p>
+
+    {% if orders %}
+    <ul>
+        {% for i in orders %}
+            <li>订单号：<a href="/admin/accounts/order/?q={{i.sn}}" target="_self">{{i.sn}}</a></li>
+        {% endfor %}
+        <!--ul>{{ sn_list|unordered_list }}</ul-->
+    </ul>
+    {% else %}
+        <ul>无任何付费信息！</ul>
+    {% endif %}
+
+    <input type="hidden" name="action" value="send_EMAIL" />
+    <!--input type="submit" name="apply" value="Send Email" /-->
+</form>
+
+{% endblock %}
