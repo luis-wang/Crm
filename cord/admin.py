@@ -60,11 +60,13 @@ class DeviceAdmin(admin.ModelAdmin):
                 orders = Order.objects.filter(user=u)
                 pass
             '''
+
+            #单片
             userorders = UserOrder.objects.filter(device_id=query_device.pk)
 
             c = RequestContext(request, {'query_device': query_device,
                                          'userorders': userorders})
-            self.message_user(request, u"查询成功", messages.SUCCESS)
+            self.message_user(request, u"查询付费信息成功", messages.SUCCESS)
         except Exception, e:
             self.message_user(request, 'Error: %s' % str(e), messages.ERROR)
             return
@@ -83,7 +85,7 @@ class CordUserAdmin(admin.ModelAdmin):
     actions_on_bottom = True
     actions_selection_counter = True
 
-    list_display = ('username', 'email', 'last_login', 'date_joined')
+    list_display = ('id', 'username', 'email', 'last_login', 'date_joined')
     search_fields = ('username', )
 
     actions = ['query_sn', 'query_user_payhistory']
@@ -124,8 +126,19 @@ class CordUserAdmin(admin.ModelAdmin):
     def query_user_payhistory(self, request, queryset):
         try:
             query_user = queryset[0]
+            #account balance
+            user_account = Account.objects.filter(user=query_user)
+            if user_account:
+                user_account = user_account[0]
+            else:
+                user_account = None
+
+            #pay history
             orders = Order.objects.filter(user=query_user)
-            c = RequestContext(request, {'orders': orders, 'query_user': query_user})
+            c = RequestContext(request, {'orders':      orders,
+                                         'query_user':  query_user,
+                                         'user_account':user_account})
+
             self.message_user(request, u"查询成功", messages.SUCCESS)
         except Exception, e:
             self.message_user(request, 'Error: %s' % str(e), messages.ERROR)
