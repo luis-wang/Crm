@@ -8,7 +8,7 @@ class Device(models.Model):
     """
     cord device model
     """
-    sn = models.CharField(_('DEVICE SN'), max_length=100)
+    sn = models.CharField(_(u'设备SN'), max_length=100)
     manufacture = models.CharField(_('MANUFACTURE'), max_length=20, null=True, blank=True)
     kind = models.CharField(_('DEVICE TYPE'), max_length=20, null=True, blank=True)
     version = models.CharField(_('VERSION'), max_length=20, null=True, blank=True)

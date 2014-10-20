@@ -1,6 +1,6 @@
 #coding:utf8
 from django.contrib import admin
-from models import UserOrder
+from order_models import UserOrder
 from django.conf import settings
 # Register your models here.
 
@@ -13,7 +13,8 @@ class UserOrderAdmin(admin.ModelAdmin):
     actions_on_bottom = True
     actions_selection_counter = True
 
-    list_display = ['trade_no', 'user_id', 'username']
+    list_display = ['trade_no', 'user_id', 'username', 'wares_type', 'valid', 'state', 'total_fee',
+                    'purchase_date', 'duration', 'expiry_date', 'source', 'device_id', 'create_date']
     search_fields = ['trade_no', 'username']
     list_filter = ['state', 'valid', 'source']
 

@@ -13,6 +13,7 @@ from django.contrib import messages
 from auth_models import User
 from trust_models import *
 from accounts_models import *
+from peony.order_models import UserOrder
 
 
 class DeviceAdmin(admin.ModelAdmin):
@@ -27,7 +28,7 @@ class DeviceAdmin(admin.ModelAdmin):
     search_fields = ('sn', 'ip')
     #过滤器，显示出这样的分类
     list_filter = ('kind',)
-    actions = ['query_user', 'query_user_payhistory']
+    actions = ['query_user', 'query_sn_payhistory']
 
     def query_user(self, request, queryset):
         '查询登录过的用户'
@@ -36,7 +37,7 @@ class DeviceAdmin(admin.ModelAdmin):
             loginHistorys = LoginHistory.objects.filter(device_id=query_device.pk)
             logined_users = [i.user for i in loginHistorys]
 
-            c = RequestContext(request, {'query_device':query_device,
+            c = RequestContext(request, {'query_device': query_device,
                                          'logined_users': logined_users})
             self.message_user(request, u"查询成功", messages.SUCCESS)
         except Exception, e:
@@ -46,10 +47,11 @@ class DeviceAdmin(admin.ModelAdmin):
         return HttpResponse(t.render(c),)
     query_user.short_description = u'查询登录过的用户'
 
-    def query_user_payhistory(self, request, queryset):
-        "查询付费信息"
+    def query_sn_payhistory(self, request, queryset):
+        "由设备SN查询付费信息"
         try:
             query_device = queryset[0]
+            '''
             loginHistorys = LoginHistory.objects.filter(device_id=query_device.pk)
             #找到在这台机器上登录过的所有用户
             logined_users = [i.user for i in loginHistorys]
@@ -57,15 +59,19 @@ class DeviceAdmin(admin.ModelAdmin):
             for u in logined_users:
                 orders = Order.objects.filter(user=u)
                 pass
+            '''
+            userorders = UserOrder.objects.filter(device_id=query_device.pk)
 
-
-
-
+            c = RequestContext(request, {'query_device': query_device,
+                                         'userorders': userorders})
+            self.message_user(request, u"查询成功", messages.SUCCESS)
         except Exception, e:
             self.message_user(request, 'Error: %s' % str(e), messages.ERROR)
             return
+        t = loader.get_template('admin/show_device_sn_orders.html')
+        return HttpResponse(t.render(c),)
 
-    query_user_payhistory.short_description = u"由设备SN查询付费信息"
+    query_sn_payhistory.short_description = u"由设备SN查询付费信息"
 
 
 

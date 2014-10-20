@@ -1,6 +1,4 @@
 # coding:utf8
-
-
 class PeonyRouter(object):
     def __init__(self):
         self.APP_LABEL = ['order', ]

@@ -1,0 +1,25 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+
+
+<form action="" method="post">{% csrf_token %}
+
+    <p>此设备(SN: <span style="color:red;">{{query_device.sn}}</span>)的付费信息:</p>
+
+    {% if userorders %}
+    <ul>
+        {% for i in userorders %}
+            <li>订单号：<a href="/admin/order/userorder/?q={{i.trade_no}}" target="_self">{{i.trade_no}}</a></li>
+        {% endfor %}
+        <!--ul>{{ sn_list|unordered_list }}</ul-->
+    </ul>
+    {% else %}
+        <ul>无任何付费信息！</ul>
+    {% endif %}
+
+    <input type="hidden" name="action" value="send_EMAIL" />
+    <!--input type="submit" name="apply" value="Send Email" /-->
+</form>
+
+{% endblock %}
